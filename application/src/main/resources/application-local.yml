@@ -1,0 +1,5 @@
+jwt:
+  secret: 8951e2179f070ef101a8777998166d243b9d42e25e71a7150b283f7cef88225e
+  refresh-secret: H2QYU0KOxZsdvxZaxTrymsZjxskhmTqT
+  access-token-expiration: 2592000000
+  refresh-token-expiration: 2592000000

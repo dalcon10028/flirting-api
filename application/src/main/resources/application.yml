@@ -1,0 +1,36 @@
+server:
+  port: 8880
+
+spring:
+  profiles:
+    include:
+      - domain
+      - infrastructure
+    group:
+      production:
+        - domain-production
+        - infrastructure-production
+      development:
+        - domain-development
+        - infrastructure-development
+      local:
+        - domain-local
+        - infrastructure-local
+
+management:
+  endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+
+jwt:
+  secret: 8951e2179f070ef101a8777998166d243b9d42e25e71a7150b283f7cef88225e
+  refresh-secret: H2QYU0KOxZsdvxZaxTrymsZjxskhmTqT
+  access-token-expiration: 300000
+  refresh-token-expiration: 2592000000

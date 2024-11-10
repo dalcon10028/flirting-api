@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  rds:
+    image: mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: local
+      MYSQL_USER: local
+      MYSQL_PASSWORD: local
+      MYSQL_DATABASE: flirting
+      TZ: Asia/Seoul
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db:/var/lib/mysql
+
+  prometheus:
+    image: prom/prometheus
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=90d' # 90일
+      - '--storage.tsdb.retention.size=1GB' # 1GB
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+      - '--web.enable-lifecycle'
+      - '--web.enable-admin-api'
+    depends_on:
+      - app
+
+  grafana:
+    image: grafana/grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./grafana:/var/lib/grafana
+    environment:
+      GF_SECURITY_ADMIN_USER: local
+      GF_SECURITY_ADMIN_PASSWORD: local
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_USERS_ALLOW_ORG_CREATE: "false"
+      GF_USERS_AUTO_ASSIGN_ORG: "true"
+      GF_USERS_AUTO_ASSIGN_ORG_ROLE: "Admin"
+
+#  app:
+#    build:
+#      context: ./application
+#      dockerfile: Dockerfile
+#    restart: unless-stopped
+#    ports:
+#      - "8880:8880"
+#    environment:
+#      SPRING_PROFILE: local
+#    depends_on:
+#      - rds

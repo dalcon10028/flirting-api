@@ -1,0 +1,18 @@
+send:
+  email:
+    endpoint: https://mail.apigw.ntruss.com
+    access-key: {{access-key}}
+    secret-key: {{secret-key}}
+
+  sms:
+    endpoint: https://sens.apigw.ntruss.com/sms/v2
+    access-key: {{access-key}}
+    secret-key: {{secret-key}}
+
+  push:
+    key-file: {{key-file}}
+
+google:
+  credentials:
+    path: {{google-credentials-path}}
+    projectId: {{google-project-id}}

@@ -1,0 +1,17 @@
+spring:
+  profiles:
+    include:
+      - domain
+      - infrastructure
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/flirting?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&tlsVersion=TLSv1.2&serverTimezone=Asia/Seoul
+    username: local
+    password: local
+
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:/db/schema.sql
+      data-locations: classpath:/db/data.sql
